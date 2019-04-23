@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content=width=device-width, initial-scale=1.0>
+    <link rel=stylesheet href=style.css>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script defer src=script.js></script>
+    <title>To Do Management</title>
+</head>
+<body>
+    <header>
+        <span class="header-title">To Do Management</span>
+    </header>
+    <p class="current-list-title">
+        Grooming a cat
+    </p>
+    <span class="list-stat">
+        <span class="list-stat-done">15</span>
+        of
+        <span class="list-stat-all">100</span>
+        done
+    </span>
+    <div class="new-item">
+        <input type="text" class="new-item-title" placeholder="Add something new...">
+        <button class="add-btn"> Add</button>
+    </div>
+    <div class="todos-container">
+        <div class="list-item">
+            <div class="item-title">
+                Something
+            </div>
+            <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
+            <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
+        </div>
+        <div class="list-item">
+            <div class="item-title crossed-item">
+                Something else what already done
+            </div>
+            <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
+            <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
+        </div>
+    </div>
+</body>
