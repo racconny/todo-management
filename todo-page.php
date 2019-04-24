@@ -4,8 +4,12 @@
     <meta charset=UTF-8>
     <meta name=viewport content=width=device-width, initial-scale=1.0>
     <link rel=stylesheet href=style.css>
+    <script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script defer src=script.js></script>
+    <script defer src="scriptt.js"></script>
     <title>To Do Management</title>
 </head>
 <body>
@@ -14,13 +18,13 @@
     </header>
 
     <?php
-
     $id = $_GET['list_id'];
     $db = new DB();
+
     $stat = $db->getListStat($id);
     $name = $db->getListName($id);
 
-    echo '<p class="current-list-title">
+    echo '<p id="title" data-id="'.$id.'"class="current-list-title">
         '.$name.'
     </p>
     <span class="list-stat">
@@ -44,26 +48,18 @@
 
         for ($i = 0; $i < sizeof($items); $i++){
 
-        $done_toggle = ($items[$i]['isDone'] === '0') ? "crossed-item" : "";
+        $done_toggle = ($items[$i]['isDone'] === '1') ? "crossed-item" : "";
 
         echo '<div class="list-item">
-            <div class="item-title '.$done_toggle.'">'.
+            <div data-id="'.$items[$i]['id'].'" class="item-title '.$done_toggle.'">'.
                 $items[$i]['title']
             .'</div>
-            <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
-            <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
+            <button data-id="'.$items[$i]['id'].'" class="item-button edit-btn" style="color: #40acff"><span class="fas fa-pen"></span></button>
+            <button data-id="'.$items[$i]['id'].'" class="item-button delete-btn" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
         </div>';
 
         }
 
         ?>
-
-        <!-- <div class="list-item">
-            <div class="item-title crossed-item">
-                Something else what already done
-            </div>
-            <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
-            <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
-        </div> -->
     </div>
 </body>

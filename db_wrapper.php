@@ -16,6 +16,30 @@ class DB
         $this->connection->set_charset("utf8");
     }
 
+    public function deleteItem($id){
+        $id = intval($id);
+        $sql = "DELETE FROM Item WHERE id = ".$id;
+
+        $this->connection->query($sql);
+    }
+
+    public function deleteList($id){
+        $id = intval($id);
+
+        $sql1 = "DELETE FROM Item WHERE list_id = ".$id;
+        $sql2 = "DELETE FROM List WHERE id = ".$id;
+
+        $this->connection->query($sql1);
+        $this->connection->query($sql2);
+    }
+
+    public function addItem($list_id, $title){
+        $sql = "INSERT INTO Item (title, isDone, datetime, list_id) VALUES ('$title', 0, NOW(), $list_id)";
+        $this->connection->query($sql) or die($this->connection->error);
+
+        return $this->connection->insert_id;
+    }
+
     public function getAllLists(){
         $sql = "SELECT * FROM List";
         $result = $this->connection->query($sql);
@@ -49,7 +73,7 @@ class DB
 
     public function getItemsForList($id){
         $id = intval($id);
-        $sql = "SELECT * FROM Item WHERE list_id = ".$id." ORDER BY datetime";
+        $sql = "SELECT * FROM Item WHERE list_id = ".$id." ORDER BY datetime DESC";
 
         $result = $this->connection->query($sql);
         
@@ -60,7 +84,14 @@ class DB
         }
 
         return $lists;
+    }
 
+    public function checkListExistance($id){
+        $id = intval($id);
+        $sql = "SELECT * FROM List WHERE id = ".$id;
+
+        $result = $this->connection->query($sql)->fetch_assoc();
+        return $result ? true : false;
     }
 
 }
