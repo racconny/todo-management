@@ -12,33 +12,58 @@
     <header>
         <span class="header-title">To Do Management</span>
     </header>
-    <p class="current-list-title">
-        Grooming a cat
+
+    <?php
+
+    $id = $_GET['list_id'];
+    $db = new DB();
+    $stat = $db->getListStat($id);
+    $name = $db->getListName($id);
+
+    echo '<p class="current-list-title">
+        '.$name.'
     </p>
     <span class="list-stat">
-        <span class="list-stat-done">15</span>
+        <span class="list-stat-done">'.$stat[0].'</span>
         of
-        <span class="list-stat-all">100</span>
+        <span class="list-stat-all">'.$stat[1].'</span>
         done
-    </span>
+    </span>';
+
+    ?>
+
     <div class="new-item">
         <input type="text" class="new-item-title" placeholder="Add something new...">
         <button class="add-btn"> Add</button>
     </div>
     <div class="todos-container">
-        <div class="list-item">
-            <div class="item-title">
-                Something
-            </div>
+
+        <?php
+
+        $items = $db->getItemsForList($id);
+
+        for ($i = 0; $i < sizeof($items); $i++){
+
+        $done_toggle = ($items[$i]['isDone'] === '0') ? "crossed-item" : "";
+
+        echo '<div class="list-item">
+            <div class="item-title '.$done_toggle.'">'.
+                $items[$i]['title']
+            .'</div>
             <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
             <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
-        </div>
-        <div class="list-item">
+        </div>';
+
+        }
+
+        ?>
+
+        <!-- <div class="list-item">
             <div class="item-title crossed-item">
                 Something else what already done
             </div>
             <button class="item-button" style="color: #40acff"><span class="fas fa-pen"></span></button>
             <button class="item-button" style="color: #ff9f9f"><span class="fas fa-trash"></span></button>
-        </div>
+        </div> -->
     </div>
 </body>

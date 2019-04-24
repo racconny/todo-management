@@ -9,6 +9,10 @@ body{
     box-sizing: border-box;
 }
 
+a{
+    text-decoration: none;
+}
+
 .lists-container{
     display: flex;
     flex-direction: row;
@@ -48,6 +52,7 @@ body{
     background: none;
     outline: none;
     width: 45%;
+    cursor: pointer;
 }
 
 .bottom-panel{
