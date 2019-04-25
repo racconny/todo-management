@@ -25,6 +25,7 @@ error_reporting(E_ALL);
         <span class="header-title">To Do Management</span>
     </header>
     <div class="lists-container">
+        <a href="javascript:addList(1)">
         <div class="list-card" style="background-color: #8eceff">
                 <span class="center-big-icon">    
                     <span class="fas fa-file-medical"></span>
@@ -33,6 +34,7 @@ error_reporting(E_ALL);
                     <span>New list...</span>
                 </span>
             </div>
+        </a>
 
         <?php
         $db = new DB();

@@ -34,10 +34,28 @@ class DB
     }
 
     public function addItem($list_id, $title){
+        
         $sql = "INSERT INTO Item (title, isDone, datetime, list_id) VALUES ('$title', 0, NOW(), $list_id)";
         $this->connection->query($sql) or die($this->connection->error);
 
         return $this->connection->insert_id;
+    }
+
+    public function editItem($item_id, $new_title){
+        $sql = "UPDATE Item SET title  = '$new_title' WHERE id = $item_id";
+        $this->connection->query($sql) or die($this->connection->error);
+
+        return $this->connection->insert_id;
+    }
+
+    public function togglePointState($point_id, $state){
+        //prevent refreshing time
+        $sql = "SELECT * FROM Item WHERE id = $point_id LIMIT 1";
+        $row = $this->connection->query($sql)->fetch_assoc();
+        $datetime = $row[0]['datetime'];
+
+        $sql = "UPDATE Item SET isDone = $state, datetime = datetime WHERE id = $point_id";
+        $this->connection->query($sql);
     }
 
     public function getAllLists(){
