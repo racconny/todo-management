@@ -9,12 +9,12 @@
         integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script defer src="script1.js"></script>
+    <script defer src="script_todo.js"></script>
     <title>To Do Management</title>
 </head>
 <body>
     <header>
-        <span class="header-title">To Do Management</span>
+        <span class="header-title"><a href="index.php"><span class="fas fa-chevron-left" style="display: inline-block; margin-right: 10px; color: white;"></span></a>To Do Management</span>
     </header>
 
     <?php

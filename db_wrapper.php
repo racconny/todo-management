@@ -30,7 +30,9 @@ class DB
         $sql2 = "DELETE FROM List WHERE id = ".$id;
 
         $this->connection->query($sql1);
-        $this->connection->query($sql2);
+        $result = $this->connection->query($sql2);
+
+        return $result;
     }
 
     public function addItem($list_id, $title){
@@ -41,11 +43,27 @@ class DB
         return $this->connection->insert_id;
     }
 
+
+    public function addList($title){
+        
+        $sql = "INSERT INTO List (name) VALUES ('$title')";
+        $result = $this->connection->query($sql) or die($this->connection->error);
+
+        return $result;
+    }
+
     public function editItem($item_id, $new_title){
         $sql = "UPDATE Item SET title  = '$new_title' WHERE id = $item_id";
-        $this->connection->query($sql) or die($this->connection->error);
+        $result = $this->connection->query($sql) or die($this->connection->error);
 
-        return $this->connection->insert_id;
+        return $result;
+    }
+
+    public function editList($list_id, $new_name){
+        $sql = "UPDATE List SET name  = '$new_name' WHERE id = $list_id";
+        $result = $this->connection->query($sql) or die($this->connection->error);
+
+        return $result;
     }
 
     public function togglePointState($point_id, $state){
@@ -59,7 +77,7 @@ class DB
     }
 
     public function getAllLists(){
-        $sql = "SELECT * FROM List";
+        $sql = "SELECT * FROM List ORDER BY id DESC";
         $result = $this->connection->query($sql);
 
         $lists = array();
@@ -80,7 +98,7 @@ class DB
 
     public function getListStat($id){
         $id = intval($id);
-        $sql1 = "SELECT COUNT(*) FROM Item WHERE isDone = 0 AND list_id = ".$id;
+        $sql1 = "SELECT COUNT(*) FROM Item WHERE isDone = 1 AND list_id = ".$id;
         $sql2 = "SELECT COUNT(*) FROM Item WHERE list_id = ".$id;
 
         $done = $this->connection->query($sql1)->fetch_array();

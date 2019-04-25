@@ -10,27 +10,30 @@ const sendRequest = (action, item, data, sender) => {
         data: {
             action: action,
             item: item,
-            data: data
+            data: JSON.stringify(data)
         },
         success: function(data_){
-            if (action === 'delete' && item === 'point'){
+            if (action === 'delete'){
                 deletePoint(sender);
             }
 
-            if ((action === 'add') && item === 'point'){
+            if (action === 'add'){
                 prependPoint(data_, data);
             } 
 
-            if ((action === 'edit') && item === 'point'){
-                if (data_ == "0") changeTitle(sender, data.split("|")[1]);
-                else alert(data_);
+            if (action === 'edit'){
+                changeTitle(sender, data[1]);
             } 
+
+            if (action === 'cross'){
+                alert(data_);
+            }
         }
     });
 }
 
 const changeTitle = (element, new_title) => {
-    element.parentNode.childNodes[0].innerHTML = new_title;
+    element.parentNode.children[0].innerHTML = new_title;
 }
 
 const refreshStat = () => {
@@ -60,10 +63,10 @@ const refresh = () => {
     edit_buttons = document.querySelectorAll('.edit-btn');
     edit_buttons.forEach(function(elem){
             elem.addEventListener('click', function(){
-            let title = elem.parentNode.childNodes[0].innerHTML;
+            let title = this.parentNode.children[0].innerHTML;
             let new_title = prompt("Enter new title", title);
             if (new_title){
-                sendRequest('edit', 'point', (this.dataset.id + "|" + new_title), this);
+                sendRequest('edit', 'point', [this.dataset.id, new_title], this);
             } 
         });
     })
@@ -71,7 +74,7 @@ const refresh = () => {
     titles = document.querySelectorAll('.item-title');
     titles.forEach(function(elem){
         elem.addEventListener('click', function(){
-        sendRequest('cross','point',(this.dataset.id + "|" + this.classList.contains("crossed-item")));
+        sendRequest('cross','point',[this.dataset.id, (this.classList.contains("crossed-item"))]);
         elem.classList.toggle("crossed-item");
         refreshStat();
     });
@@ -89,7 +92,7 @@ const refresh = () => {
 document.querySelector('.add-btn').addEventListener('click', function(){
     let point_title = document.querySelector('.new-item-title').value.trim();
     if (point_title){
-        sendRequest("add", "point", (list_id + "|" + point_title));
+        sendRequest("add", "point", [list_id, point_title]);
         refresh();
     } else alert("Enter something");
 })
@@ -99,14 +102,14 @@ document.querySelector('.new-item-title').addEventListener("keyup", function(eve
       event.preventDefault();
       let point_title = this.value.trim();
       if (point_title){
-        sendRequest("add", "point", (list_id + "|" + point_title));
+        sendRequest("add", "point", [list_id, point_title]);
         refresh();
     } else alert("Enter something");
     }
 });
 
 const prependPoint = (id, title) => {
-    title = title.split("|")[1];
+    title = title[1];
     //construct this element
     let item = document.createElement("div");
     let title_sign = document.createElement("span");
