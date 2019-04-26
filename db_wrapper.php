@@ -53,7 +53,7 @@ class DB
     }
 
     public function editItem($item_id, $new_title){
-        $sql = "UPDATE Item SET title  = '$new_title' WHERE id = $item_id";
+        $sql = "UPDATE Item SET title  = '$new_title', datetime = datetime WHERE id = $item_id";
         $result = $this->connection->query($sql) or die($this->connection->error);
 
         return $result;

@@ -52,6 +52,17 @@ const deletePoint = (element) => {
     })
 }
 
+const askRename = (e) => {
+        if (e.target !== e.currentTarget) {
+            let title = e.currentTarget.parentNode.children[0].innerHTML;
+            let new_title = prompt("Enter new title", title);
+            if (new_title){
+                sendRequest('edit', 'point', [e.currentTarget.dataset.id, new_title], e.currentTarget);
+            } 
+        }
+        e.stopPropagation();
+    }
+
 const refresh = () => {
     delete_buttons = document.querySelectorAll('.delete-btn');
     delete_buttons.forEach(function(elem){
@@ -62,13 +73,7 @@ const refresh = () => {
 
     edit_buttons = document.querySelectorAll('.edit-btn');
     edit_buttons.forEach(function(elem){
-            elem.addEventListener('click', function(){
-            let title = this.parentNode.children[0].innerHTML;
-            let new_title = prompt("Enter new title", title);
-            if (new_title){
-                sendRequest('edit', 'point', [this.dataset.id, new_title], this);
-            } 
-        });
+            elem.addEventListener('click', askRename, false);
     })
 
     titles = document.querySelectorAll('.item-title');
